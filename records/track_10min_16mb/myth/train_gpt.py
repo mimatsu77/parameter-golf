@@ -42,8 +42,8 @@ except ImportError:
 # HYPERPARAMETERS
 # ============================================================================
 # RecurrentGPT config:
-# - 5 physical layers x 4 recurrence = 20 effective depth
-# - SwiGLU 3x expansion, GQA 8/4, BigramHash(8192)
+# - 6 physical layers x 4 recurrence = 24 effective depth
+# - SwiGLU 3x expansion, GQA 9/3, BigramHash(12288), model_dim=576
 # - Mixed quantization: FP16 embed, Int6 attn Q/K, Int5 FFN, Int8 others
 
 class Hyperparameters:
@@ -68,16 +68,16 @@ class Hyperparameters:
 
     # Model shape
     vocab_size = int(os.environ.get("VOCAB_SIZE", 1024))
-    num_layers = int(os.environ.get("NUM_LAYERS", 5))
+    num_layers = int(os.environ.get("NUM_LAYERS", 6))
     recurrence_factor = int(os.environ.get("RECURRENCE_FACTOR", 4))
-    num_kv_heads = int(os.environ.get("NUM_KV_HEADS", 4))
-    model_dim = int(os.environ.get("MODEL_DIM", 512))
-    num_heads = int(os.environ.get("NUM_HEADS", 8))
+    num_kv_heads = int(os.environ.get("NUM_KV_HEADS", 3))
+    model_dim = int(os.environ.get("MODEL_DIM", 576))
+    num_heads = int(os.environ.get("NUM_HEADS", 9))
     mlp_mult = int(os.environ.get("MLP_MULT", 3))
     tie_embeddings = bool(int(os.environ.get("TIE_EMBEDDINGS", "1")))
     rope_base = float(os.environ.get("ROPE_BASE", 10000.0))
     logit_softcap = float(os.environ.get("LOGIT_SOFTCAP", 30.0))
-    bigram_hash_size = int(os.environ.get("BIGRAM_HASH_SIZE", 8192))
+    bigram_hash_size = int(os.environ.get("BIGRAM_HASH_SIZE", 12288))
     bigram_proj_dim = int(os.environ.get("BIGRAM_PROJ_DIM", 128))
 
     # Optimizer hyperparameters
